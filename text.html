@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change your Passoword Into Binary  </title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* Modern & Youthful Color Palette */
+        :root {
+            --primary-blue: #000000; /* BLEKY */
+            --dark-blue: #000000;   /* BLEKY */
+            --accent-pink: #00FFFF; /* AKU */
+            --text-dark: #333333;
+            --text-light: #f0f0f0;
+            --bg-light: #000000;
+            --bg-dark: #52534F;
+        }
+
+        /* Keyframe Animations */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes neonGlow {
+            0% { text-shadow: 0 0 5px var(--primary-blue), 0 0 10px var(--primary-blue); }
+            50% { text-shadow: 0 0 10px var(--primary-blue), 0 0 20px var(--primary-blue), 0 0 30px var(--accent-pink); }
+            100% { text-shadow: 0 0 5px var(--primary-blue), 0 0 10px var(--primary-blue); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes floatAndFade {
+            0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-200px) translateX(50px) scale(1.2); opacity: 0; }
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 30px 15px;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-dark) 100%);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative; /* Untuk elemen dekorasi */
+        }
+
+        /* Background Bubbles/Shapes (Aesthetic Touch) */
+        .bubble {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.26);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatAndFade 15s infinite ease-in-out;
+        }
+        .bubble:nth-child(1) { width: 80px; height: 80px; top: 10%; left: 5%; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 120px; height: 120px; bottom: 15%; right: 10%; animation-delay: 3s; }
+        .bubble:nth-child(3) { width: 60px; height: 60px; top: 30%; right: 20%; animation-delay: 6s; }
+        .bubble:nth-child(4) { width: 100px; height: 100px; bottom: 5%; left: 20%; animation-delay: 9s; }
+        .bubble:nth-child(5) { width: 90px; height: 90px; top: 50%; left: 2%; animation-delay: 12s; }
+
+        .container {
+            background-color: rgba(25, 31, 52, 0.2); /* Hampir solid putih */
+            padding: 35px;
+            border-radius: 25px; /* Lebih rounded */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 1); /* Bayangan lebih dramatis */
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            animation: slideInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Animasi custom */
+            backdrop-filter: blur(8px); /* Efek blur yang lebih kuat */
+            border: 2px solid var(--primary-blue); /* Border keren */
+            overflow: hidden; /* Penting untuk animasi shimmer */
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive; /* Gaya pixel art / retro gaming */
+            color: var(--dark-blue);
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 2.2em; /* Lebih kecil agar pas */
+            letter-spacing: 2px;
+            animation: neonGlow 2s infinite alternate; /* Animasi neon glow */
+            position: relative;
+            z-index: 2; /* Di atas elemen shimmer */
+        }
+
+        .member-list {
+            margin-top: 5px;
+            margin-bottom: 20px; /* Kurangi margin bawah */
+            font-size: 0.95em;
+            color: var(--primary-blue);
+            font-weight: 600;
+            line-height: 1.5;
+            /* Kita ingin ini selalu terlihat, jadi opacity 1 dan animasi di trigger di JS jika perlu */
+            opacity: 1;
+        }
+        .member-list span { /* Untuk angka di daftar anggota */
+            font-weight: 700;
+            margin-right: 5px;
+        }
+
+        .visitor-counter {
+            background: linear-gradient(45deg, var(--grey), #232429); /* Gradien pink cerah */
+            color: var(--text-light);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 30px; /* Jarak bawah */
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+            /* Hapus animation property dari sini dan tambahkan di JS agar munculnya stabil */
+            /* animation: popIn 0.6s ease-out 0.5s forwards; */
+            opacity: 1; /* Pastikan selalu terlihat */
+            transition: all 0.3s ease;
+        }
+        .visitor-counter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 1);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-top: 30px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+            overflow: hidden; /* untuk shimmer */
+            background: linear-gradient(to right, #ffffff, var(--dark-blue), #ffffff);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s infinite linear; /* Animasi shimmer pada teks */
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-pink)); /* Garis gradien */
+            border-radius: 5px;
+            animation: popIn 0.5s ease-out 0.5s forwards; /* Animasi pop in */
+            opacity: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: left;
+            font-size: 1.1em;
+            text-transform: uppercase; /* Huruf kapital */
+            letter-spacing: 0.5px;
+        }
+
+        textarea {
+            width: calc(100% - 30px); /* Menyesuaikan padding */
+            padding: 15px;
+            margin-bottom: 30px;
+            border: 2px solid var(--primary-blue); /* Border tebal */
+            border-radius: 15px; /* Lebih bulat */
+            box-sizing: border-box;
+            font-size: 1em;
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #f8faff; /* Sedikit off-white */
+        }
+        textarea:focus {
+            border-color: var(--accent-pink); /* Pink saat fokus */
+            box-shadow: 0 0 0 4px rgba(255, 102, 179, 0.2); /* Glow pink */
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--primary-blue), var(--dark-blue)); /* Gradien biru */
+            color: var(--text-light);
+            padding: 15px 35px;
+            border: none;
+            border-radius: 35px; /* Sangat bulat, gaya "pill" */
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0 15px 30px 15px;
+            transition: all 0.3s ease; /* Transisi untuk semua properti */
+            box-shadow: 0 8px 20px rgba(51, 133, 255, 0.4); /* Bayangan biru */
+            position: relative;
+            overflow: hidden; /* Untuk efek hover */
+            z-index: 1;
+        }
+        button::before { /* Efek kilat saat hover */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewX(-30deg);
+            transition: all 0.7s ease;
+        }
+        button:hover::before {
+            left: 100%;
+        }
+        button:hover {
+            background: linear-gradient(45deg, var(--dark-blue), var(--primary-blue)); /* Ubah gradien */
+            transform: translateY(-5px) scale(1.02); /* Melayang dan sedikit membesar */
+            box-shadow: 0 12px 25px rgba(51, 133, 255, 0.6);
+        }
+        button:active {
+            transform: translateY(-2px); /* Sedikit ditekan */
+            box-shadow: 0 5px 15px rgba(51, 133, 255, 0.4);
+        }
+
+        .output-box {
+            background-color: #F9F6EE; /* walter white */
+            padding: 20px;
+            border-radius: 15px;
+            min-height: 100px;
+            word-wrap: break-word;
+            border: 2px dashed var(--primary-blue); /* Border putus-putus */
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1em;
+            color: #000000; /* Biru sangat gelap untuk teks biner */
+            text-align: left;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            line-height: 1.6;
+            animation: popIn 0.6s ease-out 0.2s forwards; /* Animasi pop in saat muncul */
+            opacity: 1; /* Pastikan selalu terlihat setelah muncul pertama kali */
+        }
+        .separator {
+            margin: 50px 0;
+            border-bottom: 3px solid var(--accent-pink); /* Garis tebal pink */
+            border-radius: 5px;
+            opacity: 0.8;
+            animation: popIn 0.7s ease-out 0.4s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <div class="container">
+        <h1>Binary Password </h1>
+        <div class="member-list">
+            Mafia Club : <br>
+            <span>1.</span> Enno <br>
+            <span>2.</span> Aqila <br>
+            <span>3.</span> vita <br>
+            <span>4.</span> Naufal Adri <br>
+            <span>5.</span> Shaquilla <br>
+           
+        </div>
+
+        <div id="visitorCounter" class="visitor-counter">
+            Visitors: 0
+        </div>
+
+        <div class="section-title">Just Type in the binary code or either way</div>
+        <label for="inputText">Write your message here :</label>
+        <textarea id="inputText" rows="5" placeholder="Example : Everything is a lie,the cruelty of the goverment is a force holding our life down..."></textarea>
+        <button onclick="encryptText()">Binary it!</button>
+
+        <label for="encryptedOutput">Your Binary message :</label>
+        <div id="encryptedOutput" class="output-box"></div>
+
+        <div class="separator"></div>
+
+        <div class="section-title">Decrypt your binary</div>
+        <label for="inputBinary">Insert your Binary code :</label>
+        <textarea id="inputBinary" rows="5" placeholder="Misal: 01001011 01101111 01100100 ..."></textarea>
+        <button onclick="decryptBinary()">Decrypt it!</button>
+
+        <label for="decryptedOutput">Your message:</label>
+        <div id="decryptedOutput" class="output-box"></div>
+    </div>
+
+    <script>
+        // Fungsi untuk mengonversi teks ke biner
+        function textToBinary(text) {
+            return text.split('').map(char => {
+                const ascii = char.charCodeAt(0);
+                return ascii.toString(2).padStart(8, '0');
+            }).join(' ');
+        }
+
+        // Fungsi untuk mengonversi biner ke teks
+        function binaryToText(binaryString) {
+            const binaryArray = binaryString.split(' ');
+            return binaryArray.map(bin => {
+                if (bin === '') return ''; // Lewati blok kosong jika ada spasi berlebih
+                const decimal = parseInt(bin, 2);
+                return String.fromCharCode(decimal);
+            }).join('');
+        }
+
+        // Fungsi untuk melakukan enkripsi
+        function encryptText() {
+            const inputText = document.getElementById('inputText').value;
+            if (inputText.trim() === '') {
+                alert("Ups, jangan kosongin pesan dong! Isi dulu ya.");
+                return;
+            }
+            const encryptedBinary = textToBinary(inputText);
+            document.getElementById('encryptedOutput').textContent = encryptedBinary;
+
+            const outputBox = document.getElementById('encryptedOutput');
+            outputBox.style.animation = 'none'; // Reset animation
+            void outputBox.offsetWidth; // Trigger reflow (hack to restart animation)
+            outputBox.style.animation = 'popIn 0.6s ease-out forwards'; // Re-apply animation
+            outputBox.style.opacity = 1; // Pastikan opacity 1 setelah animasi
+        }
+
+        // Fungsi untuk melakukan dekripsi
+        function decryptBinary() {
+            const inputBinary = document.getElementById('inputBinary').value;
+            if (inputBinary.trim() === '') {
+                alert("Kode binernya mana nih? Masukin dulu ya!");
+                return;
+            }
+
+            const cleanBinaryString = inputBinary.replace(/\s+/g, ' ').trim();
+
+            if (!/^[01\s]*$/.test(cleanBinaryString)) {
+                alert("Ini bukan kode biner yang valid! Pastikan cuma ada '0', '1', dan spasi.");
+                document.getElementById('decryptedOutput').textContent = "Input salah, gengs!";
+                return;
+            }
+
+            const binaryBlocks = cleanBinaryString.split(' ');
+            for (const block of binaryBlocks) {
+                if (block === '') continue;
+                if (block.length !== 8) {
+                    alert(Ada yang aneh nih! Blok biner '${block}' harusnya 8-bit.);
+                    document.getElementById('decryptedOutput').textContent = "Input biner nggak pas!";
+                    return;
+                }
+            }
+
+            const decryptedText = binaryToText(cleanBinaryString);
+            document.getElementById('decryptedOutput').textContent = decryptedText;
+
+            const outputBox = document.getElementById('decryptedOutput');
+            outputBox.style.animation = 'none'; // Reset animation
+            void outputBox.offsetWidth; // Trigger reflow (hack to restart animation)
+            outputBox.style.animation = 'popIn 0.6s ease-out forwards'; // Re-apply animation
+            outputBox.style.opacity = 1; // Pastikan opacity 1 setelah animasi
+        }
+
+        // --- Fitur Penghitung Pengunjung ---
+        function initializeVisitorCounter() {
+            let count = localStorage.getItem('visitorCount');
+            if (count === null) {
+                count = 0;
+            } else {
+                count = parseInt(count);
+            }
+            count++; // Tambah 1 untuk setiap kunjungan
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitorCounter').textContent = Jumlah Pengunjung: ${count};
+        }
+
+        // Panggil fungsi penghitung pengunjung saat halaman dimuat
+        window.onload = function() {
+            initializeVisitorCounter(); // Inisialisasi penghitung
+
+            // Trigger animations for elements that should pop in on load
+            // We removed opacity: 0 and animation from CSS, now manage it here for consistency
+            const memberList = document.querySelector('.member-list');
+            memberList.style.animation = 'popIn 0.6s ease-out 0.3s forwards';
+            memberList.style.opacity = 1; // Ensure it's fully visible
+
+            const visitorCounter = document.getElementById('visitorCounter');
+            visitorCounter.style.animation = 'popIn 0.6s ease-out 0.5s forwards';
+            visitorCounter.style.opacity = 1; // Ensure it's fully visible
+
+            // These animations are fine as they are meant to run continuously or on hover
+            document.querySelector('.section-title').style.animation = 'shimmer 3s infinite linear';
+            document.querySelector('.section-title::after').style.animation = 'popIn 0.5s ease-out 0.5s forwards';
+            document.querySelector('.separator').style.animation = 'popIn 0.7s ease-out 0.4s forwards';
+        };
+    </script>
+</body>
+</html>
